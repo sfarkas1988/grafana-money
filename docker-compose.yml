@@ -16,6 +16,12 @@ services:
       context: ./python
     depends_on:
       - db
+    volumes:
+      - ./python:/app
+    env_file:
+      - .env
+    networks:
+      - overlay
   grafana:
     image: grafana/grafana
     environment:
@@ -26,6 +32,7 @@ services:
       - overlay
     volumes:
       - "/var/lib/grafana"
-
+    depends_on:
+      - db
 networks:
   overlay:

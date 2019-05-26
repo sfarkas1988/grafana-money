@@ -17,17 +17,22 @@ services:
     depends_on:
       - db
     volumes:
-      - "./python:/usr/src/app"
+      - ./python:/app
+    env_file:
+      - .env
+    networks:
+      - overlay
   grafana:
     image: grafana/grafana
     environment:
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
     ports:
-      - "3000:3000"
+      - "8081:3000"
     networks:
       - overlay
     volumes:
       - "/var/lib/grafana"
-
+    depends_on:
+      - db
 networks:
   overlay:
